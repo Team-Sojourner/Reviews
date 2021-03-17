@@ -1,6 +1,6 @@
 const express = require('express');
 const app = express();
-const port = 3000;
+const { PORT } = process.env;
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -10,7 +10,7 @@ app.get('/', (req, res) => {
 	res.send('Hello');
 });
 
-app.listen(port, (err) => {
+app.listen(PORT, (err) => {
 	if (err) {
 		throw err;
 	}
