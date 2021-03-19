@@ -23,6 +23,15 @@ app.use(
 	require('./routes/characteristic_reviews_route')
 );
 
+// characteristic routes
+app.use('/characteristic', require('./routes/characteristic_route'));
+
+// reviews_photos routes
+app.use('/reviews_photos', require('./routes/reviews_photos_route'));
+
+// reviews routes
+app.use('/reviews', require('./routes/reviews_route'));
+
 app.listen(PORT, (err) => {
 	if (err) {
 		throw err;

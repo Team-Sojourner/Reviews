@@ -16,6 +16,7 @@ module.exports = new Sequelize('review_db_dev', DB_USERNAME, DB_PASSWORD, {
 	operatorAliases: false,
 	define: {
 		timestamps: false,
+		freezeTableName: true,
 	},
 	pool: {
 		max: 5,

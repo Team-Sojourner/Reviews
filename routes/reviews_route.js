@@ -1,13 +1,13 @@
 const express = require('express');
 const router = express.Router();
 const db = require('../config/db');
-const characteristic_reviews = require('../models/characteristic_reviews_model');
+const reviews = require('../models/reviews_model');
 
 router.get('/', (req, res) => {
-	characteristic_reviews
+	reviews
 		.findAll({
 			where: {
-				value: 2,
+				summary: 'This product was ok!',
 			},
 		})
 		.then((data) => {
@@ -15,9 +15,7 @@ router.get('/', (req, res) => {
 			res.sendStatus(200);
 		})
 		.catch((err) =>
-			console.log(
-				'Error with getting data from characteristic_reviews table: ' + err
-			)
+			console.log('Error with getting data from reviews table: ' + err)
 		);
 });
 
