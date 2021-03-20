@@ -3,16 +3,21 @@ const router = express.Router();
 const db = require('../config/db');
 const characteristic = require('../models/characteristic_model');
 
+/* 
+	Table contains: 
+	product_id (INT), 
+	name(STRING)
+*/
+
 router.get('/', (req, res) => {
 	characteristic
 		.findAll({
 			where: {
-				name: 'Fit',
+				product_id: 20000,
 			},
 		})
 		.then((data) => {
-			console.log(data);
-			res.sendStatus(200);
+			res.send(JSON.stringify(data));
 		})
 		.catch((err) =>
 			console.log('Error with getting data from characteristic table: ' + err)
