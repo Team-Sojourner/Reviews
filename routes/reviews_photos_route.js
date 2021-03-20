@@ -2,18 +2,39 @@ const express = require('express');
 const router = express.Router();
 const db = require('../config/db');
 const reviews_photos = require('../models/reviews_photos_model');
+const Sequelize = require('sequelize');
+const Op = Sequelize.Op;
+
+/* 
+	Table contains: 
+	review_id (FK), 
+	url (STRING)
+*/
 
 router.get('/', (req, res) => {
+	var dummyData = [
+		1286879,
+		1286880,
+		1286881,
+		1286882,
+		1286883,
+		1286884,
+		1286885,
+		1286886,
+		1286887,
+		1286888,
+		1286889,
+	];
 	reviews_photos
 		.findAll({
 			where: {
-				url:
-					'https://images.unsplash.com/photo-1542574621-e088a4464f7e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=3028&q=80',
+				review_id: {
+					[Op.in]: dummyData,
+				},
 			},
 		})
 		.then((data) => {
-			console.log(data);
-			res.sendStatus(200);
+			return data;
 		})
 		.catch((err) =>
 			console.log('Error with getting data from reviews_photos table: ' + err)
