@@ -24,10 +24,7 @@ app.use(
 );
 
 // characteristic routes
-app.use('/characteristic', require('./routes/characteristic_route'));
-
-// reviews_photos routes
-app.use('/reviews_photos', require('./routes/reviews_photos_route'));
+app.use('/meta', require('./routes/characteristic_route'));
 
 // reviews routes
 app.use('/reviews', require('./routes/reviews_route'));
