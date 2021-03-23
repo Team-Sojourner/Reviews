@@ -2,6 +2,11 @@ const Sequelize = require('sequelize');
 const db = require('../config/db');
 
 const reviews = db.define('reviews', {
+	id: {
+		type: Sequelize.INTEGER,
+		primaryKey: true,
+		autoIncrement: true,
+	},
 	product_id: {
 		type: Sequelize.INTEGER,
 	},

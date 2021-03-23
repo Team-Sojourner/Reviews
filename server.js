@@ -17,17 +17,8 @@ app.get('/', (req, res) => {
 	res.send('Hello');
 });
 
-// characteristic_reviews routes
-app.use(
-	'/characteristic_reviews',
-	require('./routes/characteristic_reviews_route')
-);
-
-// characteristic routes
-app.use('/characteristic', require('./routes/characteristic_route'));
-
-// reviews_photos routes
-app.use('/reviews_photos', require('./routes/reviews_photos_route'));
+// meta routes
+app.use('/meta', require('./routes/characteristic_reviews_route'));
 
 // reviews routes
 app.use('/reviews', require('./routes/reviews_route'));
