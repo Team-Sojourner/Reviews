@@ -5,21 +5,7 @@ const reviews = require('../models/reviews_model');
 const reviews_photos = require('../models/reviews_photos_model');
 const Sequelize = require('sequelize');
 const Op = Sequelize.Op;
-
-/* 
-	Table contains: 
-	product_id (INT), 
-	rating (INT), 
-	date (DATE), 
-	summary (STRING), 
-	body (STRING), 
-	recommend (BOOLEAN), 
-	report (BOOLEAN), 
-	reviewer_name (STRING), 
-	reviewer_email (STRING), 
-	response (STRING), 
-	helpfulness (INTEGER)
-*/
+const { createReviewsObj } = require('../utils/createReviewsObj');
 
 router.get('/', (req, res) => {
 	let product_id = Math.floor(Math.random() * Math.floor(1000000));
@@ -51,26 +37,8 @@ router.get('/', (req, res) => {
 			return Promise.resolve([resultData, reviewPhotos]);
 		})
 		.then(([resultData, reviewPhotos]) => {
-			let result = {
-				product: product_id,
-				page: 0,
-				count: 5,
-				results: resultData.map((item) => {
-					let result = {
-						review_id: item.id,
-						rating: item.rating,
-						summary: item.summary,
-						recommend: item.recommend,
-						response: item.response,
-						body: item.body,
-						date: item.date,
-						reviewer_name: item.reviewer_name,
-						helpfulness: item.helpfulness,
-						photos: reviewPhotos.filter((photo) => photo.review_id === item.id),
-					};
-					return result;
-				}),
-			};
+			let result = createReviewsObj(resultData, reviewPhotos, product_id);
+
 			res.status(200).json(result);
 		})
 		.catch((err) =>

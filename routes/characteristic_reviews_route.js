@@ -1,18 +1,12 @@
 const express = require('express');
 const router = express.Router();
-const db = require('../config/db');
 const characteristic_reviews = require('../models/characteristic_reviews_model');
 const characteristic = require('../models/characteristic_model');
 const reviews = require('../models/reviews_model');
 const Sequelize = require('sequelize');
+const { modifyRatings } = require('../utils/modifyRatings');
+const { modifyRecommend } = require('../utils/modifyRecommend');
 const Op = Sequelize.Op;
-
-/* 
-	Table contains: 
-	characteristic_id (FK), 
-	review_id (FK), 
-	value (INT)
-*/
 
 router.get('/', (req, res) => {
 	let product_id = Math.floor(Math.random() * Math.floor(1000000));
@@ -24,39 +18,8 @@ router.get('/', (req, res) => {
 		})
 		.then((data) => {
 			let reviewIds = data.map((review) => review.id);
-			let recommendObj = {
-				0: 0,
-				1: 0,
-			};
-			let ratingObj = {
-				1: 0,
-				2: 0,
-				3: 0,
-				4: 0,
-				5: 0,
-			};
-
-			data.map((review) => {
-				if (review.recommend) {
-					recommendObj[1]++;
-				} else {
-					recommendObj[0]++;
-				}
-			});
-
-			data.map((review) => {
-				if (review.rating === 1) {
-					ratingObj[1]++;
-				} else if (review.rating === 2) {
-					ratingObj[2]++;
-				} else if (review.rating === 3) {
-					ratingObj[3]++;
-				} else if (review.rating === 4) {
-					ratingObj[4]++;
-				} else if (review.rating === 5) {
-					ratingObj[5]++;
-				}
-			});
+			let recommendObj = modifyRecommend(data);
+			let ratingObj = modifyRatings(data);
 			return Promise.resolve([reviewIds, recommendObj, ratingObj]);
 		})
 		.then(async ([reviewIds, recommendObj, ratingObj]) => {
