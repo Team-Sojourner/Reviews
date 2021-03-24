@@ -1,14 +1,15 @@
 const express = require('express');
 const router = express.Router();
-const db = require('../config/db');
-const reviews = require('../models/reviews_model');
-const reviews_photos = require('../models/reviews_photos_model');
 const Sequelize = require('sequelize');
 const Op = Sequelize.Op;
 const { createReviewsObj } = require('../utils/createReviewsObj');
+const characteristic_reviews = require('../models/characteristic_reviews_model');
+const reviews = require('../models/reviews_model');
+const reviews_photos = require('../models/reviews_photos_model');
 
 router.get('/', (req, res) => {
-	let product_id = Math.floor(Math.random() * Math.floor(1000000));
+	let product_id = 2000;
+	// let product_id = Math.floor(Math.random() * Math.floor(1000000));
 	reviews
 		.findAll({
 			where: {
@@ -37,13 +38,78 @@ router.get('/', (req, res) => {
 			return Promise.resolve([resultData, reviewPhotos]);
 		})
 		.then(([resultData, reviewPhotos]) => {
-			let result = createReviewsObj(resultData, reviewPhotos, product_id);
+			let reviewResult = createReviewsObj(resultData, reviewPhotos, product_id);
 
-			res.status(200).json(result);
+			res.status(200).json(reviewResult);
 		})
 		.catch((err) =>
 			console.log('Error with getting data from reviews table: ' + err)
 		);
+});
+
+router.post('/', (req, res) => {
+	let {
+		product_id,
+		rating,
+		summary,
+		body,
+		name,
+		email,
+		photos,
+		characteristics,
+	} = req.body;
+
+	reviews
+		.create({
+			product_id: parseInt(product_id),
+			rating: parseInt(rating),
+			date: new Date(),
+			summary,
+			body,
+			reccomend: true,
+			reported: false,
+			reviewer_name: name,
+			reviewer_email: email,
+			response: '',
+			helpfulness: 0,
+		})
+		.then(async (data) => {
+			let reviewId = data.dataValues.id;
+			let photosArr = [];
+			let characteristicArr = [];
+
+			for (let i = 0; i < photos.length; i++) {
+				let photosObj = {
+					review_id: reviewId,
+					url: photos[i],
+				};
+
+				photosArr.push(photosObj);
+			}
+
+			for (let key in characteristics) {
+				let characteristicObj = {
+					characteristic_id: parseInt(key),
+					review_id: parseInt(reviewId),
+					value: parseInt(characteristics[key]),
+				};
+
+				characteristicArr.push(characteristicObj);
+			}
+
+			try {
+				await reviews_photos.bulkCreate(photosArr);
+				await characteristic_reviews.bulkCreate(characteristicArr);
+				res.sendStatus(201);
+			} catch (error) {
+				console.error('Error with photos and characteristics: ' + error);
+				res.sendStatus(500);
+			}
+		})
+		.catch((err) => {
+			console.error('Error creating reviews: ' + err);
+			res.sendStatus(500);
+		});
 });
 
 module.exports = router;

@@ -11,14 +11,13 @@ db.authenticate()
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-// app.use(express.static('index.html'));
 
 app.get('/', (req, res) => {
 	res.send('Hello');
 });
 
 // meta routes
-app.use('/meta', require('./routes/characteristic_reviews_route'));
+app.use('/meta', require('./routes/meta_route'));
 
 // reviews routes
 app.use('/reviews', require('./routes/reviews_route'));

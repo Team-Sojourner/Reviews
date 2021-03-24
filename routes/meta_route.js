@@ -1,14 +1,15 @@
 const express = require('express');
 const router = express.Router();
+const Sequelize = require('sequelize');
+const Op = Sequelize.Op;
 const characteristic_reviews = require('../models/characteristic_reviews_model');
 const characteristic = require('../models/characteristic_model');
 const reviews = require('../models/reviews_model');
-const Sequelize = require('sequelize');
 const { modifyRatings } = require('../utils/modifyRatings');
 const { modifyRecommend } = require('../utils/modifyRecommend');
-const Op = Sequelize.Op;
 
 router.get('/', (req, res) => {
+	// let product_id = req.body.product_id;
 	let product_id = Math.floor(Math.random() * Math.floor(1000000));
 	reviews
 		.findAll({
@@ -44,16 +45,19 @@ router.get('/', (req, res) => {
 					let result = {
 						product_id: product_id,
 						ratings: ratingObj,
-						recommend: recommendObj,
-						characteristic: resultCharac,
+						recommended: recommendObj,
+						characteristics: resultCharac,
 					};
-					res.json(result);
+					res.status(200).json(result);
 				})
 				.catch((err) =>
 					console.log(
 						'Error with getting data from characteristic_reviews table: ' + err
 					)
 				);
+		})
+		.catch((err) => {
+			console.log('Error with getting data from meta table:' + err);
 		});
 });
 
