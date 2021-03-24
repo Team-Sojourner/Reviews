@@ -3,9 +3,11 @@ const db = require('../config/db');
 
 const reviews = db.define('reviews', {
 	id: {
-		type: Sequelize.INTEGER,
-		primaryKey: true,
+		allowNull: false,
 		autoIncrement: true,
+		primaryKey: true,
+		unique: true,
+		type: Sequelize.INTEGER,
 	},
 	product_id: {
 		type: Sequelize.INTEGER,
@@ -41,5 +43,7 @@ const reviews = db.define('reviews', {
 		type: Sequelize.INTEGER,
 	},
 });
+
+//reviews.sync({ alter: true });
 
 module.exports = reviews;
