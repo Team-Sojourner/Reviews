@@ -13,7 +13,6 @@ module.exports = new Sequelize('review_db_dev', DB_USERNAME, DB_PASSWORD, {
 	host: DB_HOST,
 	port: 5433,
 	dialect: 'postgres',
-	//omitNull: true,
 	operatorAliases: false,
 	define: {
 		timestamps: false,

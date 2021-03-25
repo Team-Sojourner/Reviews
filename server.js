@@ -22,6 +22,12 @@ app.use('/meta', require('./routes/meta_route'));
 // reviews routes
 app.use('/reviews', require('./routes/reviews_route'));
 
+// report put routes
+app.use('/reviews/report', require('./routes/reviews_report_put_route'));
+
+// help put routes
+app.use('/reviews/helpful', require('./routes/reviews_help_put_route'));
+
 app.listen(PORT, (err) => {
 	if (err) {
 		throw err;
