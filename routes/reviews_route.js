@@ -80,7 +80,7 @@ router.post('/', (req, res) => {
 
 			for (let i = 0; i < photos.length; i++) {
 				let photosObj = {
-					review_id: reviewId,
+					review_id: parseInt(reviewId),
 					url: photos[i],
 				};
 
