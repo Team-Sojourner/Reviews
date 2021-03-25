@@ -8,8 +8,8 @@ const reviews = require('../models/reviews_model');
 const reviews_photos = require('../models/reviews_photos_model');
 
 router.get('/', (req, res) => {
-	let product_id = 2000;
-	// let product_id = Math.floor(Math.random() * Math.floor(1000000));
+	//let product_id = 2000;
+	let product_id = Math.floor(Math.random() * Math.floor(1000000));
 	reviews
 		.findAll({
 			where: {
