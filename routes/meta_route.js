@@ -9,7 +9,7 @@ const { modifyRatings } = require('../utils/modifyRatings');
 const { modifyRecommend } = require('../utils/modifyRecommend');
 
 router.get('/', (req, res) => {
-	// let product_id = req.body.product_id;
+	//let product_id = 1000;
 	let product_id = Math.floor(Math.random() * Math.floor(1000000));
 	reviews
 		.findAll({
@@ -48,7 +48,8 @@ router.get('/', (req, res) => {
 						recommended: recommendObj,
 						characteristics: resultCharac,
 					};
-					res.status(200).json(result);
+					res.header('Access-Control-Allow-Origin', '*');
+					res.send(result);
 				})
 				.catch((err) =>
 					console.log(
