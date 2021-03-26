@@ -8,7 +8,7 @@ const reviews = require('../models/reviews_model');
 const reviews_photos = require('../models/reviews_photos_model');
 
 router.get('/', (req, res) => {
-	//let product_id = 2000;
+	//let product_id = 1000;
 	let product_id = Math.floor(Math.random() * Math.floor(1000000));
 	reviews
 		.findAll({
@@ -39,8 +39,8 @@ router.get('/', (req, res) => {
 		})
 		.then(([resultData, reviewPhotos]) => {
 			let reviewResult = createReviewsObj(resultData, reviewPhotos, product_id);
-
-			res.status(200).json(reviewResult);
+			res.header('Access-Control-Allow-Origin', '*');
+			res.json(reviewResult);
 		})
 		.catch((err) =>
 			console.log('Error with getting data from reviews table: ' + err)

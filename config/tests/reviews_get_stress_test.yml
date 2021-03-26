@@ -15,10 +15,3 @@ scenarios:
           url: '/reviews'
           expect:
             - statusCode: 200
-      # - think: 3
-  # - name: 'Load test get meta request'
-  #   flow:
-  #     - get:
-  #         url: '/meta'
-  #         expect:
-  #           - statusCode: 200
