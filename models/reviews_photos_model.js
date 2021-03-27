@@ -24,6 +24,6 @@ reviews_photos.belongsTo(reviews, {
 	foreignKey: 'review_id',
 });
 
-//reviews_photos.sync({ alter: true });
+//reviews_photos.sync();
 
 module.exports = reviews_photos;

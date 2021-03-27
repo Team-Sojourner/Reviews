@@ -38,6 +38,6 @@ characteristic_reviews.belongsTo(reviews, {
 	foreignKey: 'review_id',
 });
 
-//characteristic_reviews.sync({ alter: true });
+//characteristic_reviews.sync();
 
 module.exports = characteristic_reviews;

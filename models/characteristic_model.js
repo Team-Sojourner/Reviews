@@ -17,6 +17,6 @@ const characteristic = db.define('characteristic', {
 	},
 });
 
-//characteristic.sync({ alter: true });
+//characteristic.sync();
 
 module.exports = characteristic;
