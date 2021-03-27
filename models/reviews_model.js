@@ -44,6 +44,6 @@ const reviews = db.define('reviews', {
 	},
 });
 
-//reviews.sync({ alter: true });
+//reviews.sync();
 
 module.exports = reviews;

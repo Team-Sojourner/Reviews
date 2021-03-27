@@ -10,8 +10,7 @@ const config = {
 };
 
 module.exports = new Sequelize('review_db_dev', DB_USERNAME, DB_PASSWORD, {
-	host: DB_HOST,
-	port: 5433,
+	host: 'postgresdb',
 	dialect: 'postgres',
 	operatorAliases: false,
 	define: {

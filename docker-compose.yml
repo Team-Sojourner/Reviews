@@ -1,6 +1,24 @@
-version: ‘3’
-service:
+version: '3.7'
+services:
+  app:
+    container_name: docker-node-postgres
+    restart: always
+    build: .
+    ports:
+      - '80:3001'
+    links:
+      - postgres
   postgres:
-  image: ‘postgres: latest’
-  ports:
-    - “5432:5432” 
+    container_name: postgresdb
+    image: postgres
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=review_db_dev
+    volumes:
+      - database-data:/var/lib/postgresql/data/
+    ports:
+      - '5432:5432'
+
+volumes:
+  database-data:
